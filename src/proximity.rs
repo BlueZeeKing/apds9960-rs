@@ -56,6 +56,12 @@ where
         initial |= (triggers << 4) & 0b11110000;
         self.write_register(0x8C, initial)
     }
+
+    /// Checks if a proximity interupt has occured
+    pub fn get_proximity_interupt(&mut self) -> Result<bool, Error<E>> {
+        Ok(self.read_register(0x93)? & 0b0010_0000 > 0)
+    }
+
     /// Set the proximity up/right photodiode offset.
     pub fn set_proximity_up_right_offset(&mut self, offset: i8) -> Result<(), Error<E>> {
         self.write_register(Register::POFFSET_UR, offset as u8)
