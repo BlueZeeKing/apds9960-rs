@@ -177,16 +177,7 @@
 #![deny(missing_docs, unsafe_code)]
 #![no_std]
 
-extern crate embedded_hal as hal;
-use hal::blocking::i2c;
-extern crate nb;
-
-/// All possible errors in this crate
-#[derive(Debug)]
-pub enum Error<E> {
-    /// I²C bus error
-    I2C(E),
-}
+use embedded_hal::i2c;
 
 /// Gesture FIFO data threshold.
 ///
@@ -377,7 +368,7 @@ pub struct Apds9960<I2C> {
 
 impl<I2C, E> Apds9960<I2C>
 where
-    I2C: i2c::Write<Error = E>,
+    I2C: i2c::I2c<Error = E>,
 {
     /// Create new instance of the APDS9960 device.
     pub fn new(i2c: I2C) -> Self {
